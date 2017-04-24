@@ -14,3 +14,31 @@ id integer primary key auto_increment
 ,icon VARBINARY(54000)
 ,insert_date TIMESTAMP NOT NULL
 ,update_date TIMESTAMP NOT NULL);
+
+
+
+
+サーブレットとビューのやり取りの方法
+
+
+
+
+
+CREATE TABLE message
+(
+id integer primary key auto_increment
+,user_id INTEGER NOT NULL
+,text VARCHAR(255) NOT NULL
+,insert_date TIMESTAMP NOT NULL
+,update_date TIMESTAMP NOT NULL
+);
+
+
+CREATE VIEW user_message AS
+SELECT user.account , user.name, user.id ,message.user_id ,message.text ,message.insert_date AS insert_date
+FROM
+user,message
+WHERE
+user.id = message.user_id
+ORDER BY
+user.id,message.user_id;
