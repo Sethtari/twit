@@ -1,0 +1,16 @@
+207
+267
+271
+
+CREATE TABLE user (
+
+id integer primary key auto_increment
+,account VARCHAR(255) UNIQUE NOT NULL
+
+,name VARCHAR(255)
+,email VARCHAR(255) UNIQUE
+,password VARCHAR(255) NOT NULL
+,description VARCHAR(255)
+,icon VARBINARY(54000)
+,insert_date TIMESTAMP NOT NULL
+,update_date TIMESTAMP NOT NULL);
