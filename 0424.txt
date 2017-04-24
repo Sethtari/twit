@@ -2,6 +2,10 @@
 267
 271
 
+125
+165
+
+
 CREATE TABLE user (
 
 id integer primary key auto_increment
@@ -42,3 +46,7 @@ WHERE
 user.id = message.user_id
 ORDER BY
 user.id,message.user_id;
+
+
+
+mysqldump -usample_user -psample_password -r sample.bakcup --single-transaction sample
