@@ -22,22 +22,21 @@ public class SignUpServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
+			HttpServletResponse response) throws ServletException, IOException {
 
 		request.getRequestDispatcher("signup.jsp").forward(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
+			HttpServletResponse response) throws ServletException, IOException {
 
 		List<String> messages = new ArrayList<String>();
 
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
 		if (isValid(request, messages) == true) {
 
-//			User user = new User();
+			User user = new User();
 			user.setName(request.getParameter("name"));
 			user.setAccount(request.getParameter("account"));
 			user.setPassword(request.getParameter("password"));
