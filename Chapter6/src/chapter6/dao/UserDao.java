@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chapter6.beans.User;
+import chapter6.exception.NoRowsUpdatedRuntimeException;
 import chapter6.exception.SQLRuntimeException;
 import chapter6.utils.StreamUtil;
 
@@ -139,7 +140,55 @@ public class UserDao {
 			close(ps);
 		}
 	}
+	public void update(Connection connection, User user) {
 
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE user SET");
+			sql.append("  account = ?");
+			sql.append(", name = ?");
+			sql.append(", email = ?");
+			sql.append(", password = ?");
+			sql.append(", description = ?");
+			sql.append(", update_date = CURRENT_TIMESTAMP");
+			if (user.getIcon() != null) {
+				sql.append(", icon = ?");
+			}
+			sql.append(" WHERE");
+			sql.append(" id = ?");
+			sql.append(" AND");
+			sql.append(" update_date = ?");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ps.setString(1, user.getAccount());
+			ps.setString(2, user.getName());
+			ps.setString(3, user.getEmail());
+			ps.setString(4, user.getPassword());
+			ps.setString(5, user.getDescription());
+			if (user.getIcon() == null) {
+				ps.setInt(6, user.getId());
+				ps.setTimestamp(7,
+						new Timestamp(user.getUpdateDate().getTime()));
+			} else {
+				ps.setBinaryStream(6, new ByteArrayInputStream(user.getIcon()));
+				ps.setInt(7, user.getId());
+				ps.setTimestamp(8,
+						new Timestamp(user.getUpdateDate().getTime()));
+			}
+
+			int count = ps.executeUpdate();
+			if (count == 0) {
+				throw new NoRowsUpdatedRuntimeException();
+			}
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
+	}
 	public User getUser(Connection connection, int id) {
 
 		PreparedStatement ps = null;

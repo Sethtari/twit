@@ -1,7 +1,7 @@
 package chapter6.service;
 
-import static chapter6.utils.CloseableUtil.*;
 import static chapter6.utils.DBUtil.*;
+import static chapter6.utils.CloseableUtil.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -55,6 +55,29 @@ public class UserService {
 		}
 	}
 
+	public void update(User user) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			String encPassword = CipherUtil.encrypt(user.getPassword());
+			user.setPassword(encPassword);
+
+			UserDao userDao = new UserDao();
+			userDao.update(connection, user);
+
+			commit(connection);
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
 
 	public User getUser(int userId) {
 

@@ -34,8 +34,8 @@ public class SignUpServlet extends HttpServlet {
 		List<String> messages = new ArrayList<String>();
 
 		HttpSession session = request.getSession();
-		if (isValid(request, messages) == true) {
-
+		if (isValid(request, messages) == true) {	//55行目、アカウントとパスワードが記入されていれば実行
+			//書き込み作業
 			User user = new User();
 			user.setName(request.getParameter("name"));
 			user.setAccount(request.getParameter("account"));
@@ -48,7 +48,11 @@ public class SignUpServlet extends HttpServlet {
 			response.sendRedirect("./");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("signup");
+			session.setAttribute("name",request.getParameter("name"));
+			session.setAttribute("account",request.getParameter("account"));
+			session.setAttribute("email",request.getParameter("email"));
+			session.setAttribute("description",request.getParameter("description"));
+			request.getRequestDispatcher("signup.jsp").forward(request, response);
 		}
 	}
 

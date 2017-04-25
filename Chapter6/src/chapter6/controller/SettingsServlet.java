@@ -1,31 +1,31 @@
 package chapter6.controller;
 
-//import static chapter6.utils.CloseableUtil.*;
+import static chapter6.utils.CloseableUtil.*;
 
-//import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-//import java.io.InputStream;
-//import java.util.ArrayList;
-//import java.util.List;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
-//import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-//import javax.servlet.http.Part;
+import javax.servlet.http.Part;
 
-//import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import chapter6.beans.User;
-//import chapter6.exception.NoRowsUpdatedRuntimeException;
+import chapter6.exception.NoRowsUpdatedRuntimeException;
 import chapter6.service.UserService;
-//import chapter6.utils.StreamUtil;
+import chapter6.utils.StreamUtil;
 
 @WebServlet(urlPatterns = { "/settings" })
-//@MultipartConfig(maxFileSize = 100000)
+@MultipartConfig(maxFileSize = 100000)
 public class SettingsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,7 +44,7 @@ public class SettingsServlet extends HttpServlet {
 		request.getRequestDispatcher("settings.jsp").forward(request, response);
 	}
 
-/*	@Override
+	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
@@ -129,6 +129,6 @@ public class SettingsServlet extends HttpServlet {
 		} else {
 			return false;
 		}
-	}*/
+	}
 
 }
